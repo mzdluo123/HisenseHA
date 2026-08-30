@@ -14,6 +14,10 @@ async def async_setup_entry(hass: core.HomeAssistant, entry: config_entries.Conf
         device_id = device_info["device_id"]
         wifi_id = device_info["wifi_id"]
         refresh_token = device_info["refresh_token"]
+        access_token = device_info.get("access_token")
+        customer_id = device_info.get("customer_id", "")
+        partner_id = device_info.get("partner_id", "1001")
+        home_id = device_info.get("home_id", "")
         device_type = device_info.get("device_type", "空调")
         device_type_name = device_info.get("device_type_name", "")
         device_name = device_info.get("device_name", "")
@@ -29,7 +33,11 @@ async def async_setup_entry(hass: core.HomeAssistant, entry: config_entries.Conf
                 refresh_token=refresh_token,
                 session=session,
                 device_name=friendly_name,
-                entity_name=entity_name
+                entity_name=entity_name,
+                home_id=home_id,
+                access_token=access_token,
+                customer_id=customer_id,
+                partner_id=partner_id,
             )
         else:
             client = HiSenseAC(
@@ -38,7 +46,11 @@ async def async_setup_entry(hass: core.HomeAssistant, entry: config_entries.Conf
                 refresh_token=refresh_token,
                 session=session,
                 device_name=friendly_name,
-                entity_name=entity_name
+                entity_name=entity_name,
+                home_id=home_id,
+                access_token=access_token,
+                customer_id=customer_id,
+                partner_id=partner_id,
             )
 
         coordinator = HisenseDataUpdateCoordinator(hass, client, device_type)

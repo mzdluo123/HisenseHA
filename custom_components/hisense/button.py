@@ -14,11 +14,6 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     coordinators = hass.data[DOMAIN][config_entry.entry_id]
     entities = [HisenseACUpdateButton(coordinator) for coordinator in coordinators.values()]
     async_add_entities(entities)
-    entities = [
-        HisenseACRefreshTokenButton(coordinator)
-        for coordinator in coordinators.values()
-    ]
-    async_add_entities(entities)
 
 
 class HisenseACUpdateButton(HisenseEntity, ButtonEntity):
@@ -35,18 +30,3 @@ class HisenseACUpdateButton(HisenseEntity, ButtonEntity):
         await self.coordinator.async_request_refresh()
         if not self.coordinator.last_update_success:
             raise HomeAssistantError("Failed to refresh Hisense AC status")
-
-
-class HisenseACRefreshTokenButton(HisenseEntity, ButtonEntity):
-    _attr_translation_key = "refresh_token"
-
-    def __init__(self, coordinator):
-        super().__init__(coordinator, "refresh_token", "refresh_token")
-        self._attr_icon = "mdi:refresh"
-        self._attr_entity_category = EntityCategory.DIAGNOSTIC
-
-    async def async_press(self):
-        """Handle the button press."""
-        _LOGGER.debug(f"Button pressed for entity: {self._attr_unique_id}")
-        if not await self.client.refresh():
-            raise HomeAssistantError("Failed to refresh Hisense access token")

@@ -21,11 +21,11 @@
     "error": {
       "cannot_connect": "Unable to connect to the device",
       "invalid_auth": "Failed to login",
-      "no_devices": "No supported Hisense AC devices were found",
+      "no_devices": "No supported Hisense devices were found",
       "no_homes": "No homes were found for this account",
       "unknown": "An unknown error occurred"
     },
-    "title": "Hisense AC"
+    "title": "Hisense Smart Device"
   },
   "device": {
     "hisense_ac": {
@@ -39,9 +39,6 @@
     "climate": {
       "thermostat": {
         "name": "Climate"
-      },
-      "fridge_climate": {
-        "name": "Fridge Control"
       }
     },
     "switch": {
@@ -50,14 +47,20 @@
       },
       "auxiliary_heat": {
         "name": "Auxiliary heat"
+      },
+      "fast_cool_heat": {
+        "name": "Fast cooling/heating"
+      },
+      "nature_wind": {
+        "name": "Nature wind"
+      },
+      "prompt_sound": {
+        "name": "Prompt sound"
       }
     },
     "button": {
       "force_update": {
         "name": "Force refresh"
-      },
-      "refresh_token": {
-        "name": "Refresh token"
       }
     },
     "number": {
@@ -66,46 +69,14 @@
       },
       "climate_max_temp": {
         "name": "Thermostat max temperature"
-      },
-      "refrigerator_temp_control": {
-        "name": "Refrigerator Temp Control"
-      },
-      "freeze_temp_control": {
-        "name": "Freezer Temp Control"
       }
     },
     "sensor": {
-      "refrigerator_set_temperature": {
-        "name": "Refrigerator Set Temperature"
+      "today_energy": {
+        "name": "Today's energy"
       },
-      "freeze_set_temperature": {
-        "name": "Freezer Set Temperature"
-      },
-      "refrigerator_real_temperature": {
-        "name": "Refrigerator Real Temperature"
-      },
-      "freeze_real_temperature": {
-        "name": "Freezer Real Temperature"
-      },
-      "variation_real_temperature": {
-        "name": "Variation Real Temperature"
-      },
-      "work_mode": {
-        "name": "Work Mode"
-      },
-      "variation_mode": {
-        "name": "variation_mode"
-      },
-      "ambient_temperature": {
-        "name": "Ambient Temperature"
-      }
-    },
-    "select": {
-      "work_mode_select": {
-        "name": "Work Mode Select"
-      },
-      "variation_mode_select": {
-        "name": "Variable Zone Mode Select"
+      "run_time": {
+        "name": "Today's runtime"
       }
     }
   }

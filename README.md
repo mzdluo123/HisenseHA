@@ -4,7 +4,7 @@
 
 [简体中文](README_zh-Hans.md)
 
-Home Assistant custom integration for **Hisense** cloud-connected smart devices. **Air conditioners (AC)** and **refrigerators** are supported. If you want support for more device types, **pull requests** are welcome.
+Home Assistant custom integration for **Hisense** cloud-connected smart devices. Air conditioners use the **AIHome** API. Refrigerators are discovered as a read-only placeholder until their AIHome command mappings are captured. If you want support for more device types, **pull requests** are welcome.
 
 ## Requirements
 
@@ -42,15 +42,14 @@ Click the button above, or manually:
 4. Choose the **home** that contains your AC or refrigerator.
 5. Select one or more **devices**, then finish the wizard.
 
-Refrigerator mode controls are currently kept disabled until their cloud API mappings are validated. Temperature sensors and refrigerator/freezer temperature controls are available.
+Refrigerator controls and sensors are currently kept disabled until their AIHome mappings are validated.
+
+The AC exposes the verified AIHome controls for power-on, temperature, mode, fan speed, automatic wind, screen, auxiliary heat, natural wind, and horizontal full-swing control. Fast cooling/heating is exposed as a separate switch. Power-off is intentionally unavailable until a command is confirmed to change the device state. AC energy sensors report today's energy and runtime from the AIHome `todayenergy` endpoint.
 
 ## Status sync
 
-This integration talks to the **Hisense cloud**. Device state in the UI **updates mainly after you act on an entity** (for example changing temperature, power, or mode); it does **not** continuously poll full device state on a fixed interval in the background.
+This integration talks to the **Hisense AIHome cloud**. Device state is read during setup and after entity actions; it does **not** continuously poll full device state on a fixed interval in the background.
 
-Each device exposes two **Diagnostic** buttons (names follow your UI language; in English they are **Refresh token** and **Force refresh**):
-
-- **Refresh token**: Exchanges the refresh token with Hisense servers for a new access token. Tokens usually last months and are renewed automatically. This control is mainly for **developer debugging**; **do not** press it unless for you know exactly what to do.
-- **Force refresh**: Requests the **current state once** from the Hisense cloud. Each press causes a **real cloud request**. **Do not** automate it as “poll every few seconds or minutes,” or you may hit rate limits or get the API endpoint blocked entirely.
+Each device exposes one **Diagnostic** button, **Force refresh**, which requests the current state once from the Hisense AIHome cloud. Each press causes a real cloud request; do not automate it as frequent polling.
 
 If you need **real-time status update**, we recommend pairing the same Hisense device with **Mi Home** as well, then in Home Assistant use [Xiaomi Miot](https://github.com/al-one/hass-xiaomi-miot) or [Xiaomi Home](https://github.com/xiaomi/ha_xiaomi_home) to observe Mi Home state changes, and an **automation** that triggers this integration’s **Force refresh** button for the matching device when the Xiaomi entity changes, to sync Hisense entities indirectly.

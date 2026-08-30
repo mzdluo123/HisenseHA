@@ -13,6 +13,7 @@ class HisenseConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         self._home_options = None
         self._access_token = None
         self._refresh_token = None
+        self._customer_id = None
         self._device_info = None
 
     async def async_step_user(self, user_input=None):
@@ -32,10 +33,10 @@ class HisenseConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 if not token_pair:
                     errors["base"] = "invalid_auth"
                 else:
-                    access_token, refresh_token = token_pair
+                    access_token, refresh_token, customer_id = token_pair
                     try:
                         self._home_options = await hisense_login.get_home_select_options(
-                            access_token
+                            access_token, customer_id
                         )
                     except Exception:
                         errors["base"] = "cannot_connect"
@@ -47,6 +48,7 @@ class HisenseConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                         else:
                             self._access_token = access_token
                             self._refresh_token = refresh_token
+                            self._customer_id = customer_id
                             return await self.async_step_home()
 
         return self.async_show_form(
@@ -73,7 +75,10 @@ class HisenseConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             hisense_login = HiSenseLogin(session=session)
             try:
                 self._device_info = await hisense_login.get_all_devices(
-                    self._access_token, home_id, self._refresh_token
+                    self._access_token,
+                    home_id,
+                    self._refresh_token,
+                    self._customer_id,
                 )
             except Exception:
                 errors["base"] = "cannot_connect"
